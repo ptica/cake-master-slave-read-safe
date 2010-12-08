@@ -1,3 +1,5 @@
+**Update:** Working on a datasource to handle this.
+
 Changing AppModel and database config to let CakePHP work with Master/Slave database setup.
 Overriding several CakePHP functions and add random slave initiation.
 
@@ -18,6 +20,7 @@ If you have model specific callbacks use parent::beforeSave() before anything el
 		}
 	}
 	
+Also be carefull when using any function that supports array(callbacks => false)
 	
 All credits to Peter Farsinsen [on github](https://github.com/peterfarsinsen "Peter Farsinsen on GitHub")
 
