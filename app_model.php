@@ -13,15 +13,30 @@ class AppModel extends Model
     public $prevDbConfig = null;
 
     /**
-    * Make Model::save() write on master
+    * Make Model::beforeFind() write on master
     * @see http://bakery.cakephp.org/articles/gman.php/2009/01/20/master-slave-support-also-with-multiple-slave-support
     */
-    public function save($data = null, $validate = true, $fieldList = array()) {
+    public function beforeFind($queryData) {
+        $this->_switchDbConfig('default');
+        return parent::beforeFind($queryData);
+    }
+    
+    /**
+    * Make Model::beforeSave() write on master
+    * @see http://bakery.cakephp.org/articles/gman.php/2009/01/20/master-slave-support-also-with-multiple-slave-support
+    */
+    public function beforeSave($options = array()) {
         $this->_switchDbConfig('master');
-        $return = parent::save($data, $validate, $fieldList);
-        $this->_switchDbConfig();
-
-        return $return;
+        return parent::beforeSave($options);
+    }
+    
+    /**
+    * Make Model::beforeDelete() write on master
+    * @see http://bakery.cakephp.org/articles/gman.php/2009/01/20/master-slave-support-also-with-multiple-slave-support
+    */
+    public function beforeDelete($cascade = true) {
+        $this->_switchDbConfig('master');
+        return parent::beforeDelete($cascase);
     }
 
     /**
@@ -30,21 +45,7 @@ class AppModel extends Model
     */
     public function updateAll($fields, $conditions = true) {
         $this->_switchDbConfig('master');
-        $return = parent::updateAll($fields, $conditions);
-        $this->_switchDbConfig();
-
-        return $return;
-    }
-
-    /**
-    * Make Model::delete() write on master
-    */
-    public function delete($id = null, $cascade = true) {
-        $this->_switchDbConfig('master');
-        $return = parent::delete($id, $cascade);
-        $this->_switchDbConfig();
-
-        return $return;
+        return parent::updateAll($fields, $conditions);
     }
 
     /**
@@ -64,8 +65,6 @@ class AppModel extends Model
         if(!empty($params)) {
             $result =& call_user_func_array(array($this, 'parent::query'), $params);
         }
-
-        $this->_switchDbConfig();
 
         return $result;
     }
