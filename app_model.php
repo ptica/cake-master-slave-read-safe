@@ -48,7 +48,7 @@ class AppModel extends Model
     public function query() {
         $params = func_get_args();
         
-        $datasource = 'deault';
+        $datasource = 'default';
         if(!empty($params) && is_string($params[0])) {
             $updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE');
             $datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($params[0])) ? 'master' : 'default';
