@@ -1,4 +1,4 @@
-Master Slave database setup.
+Changing AppModel and database config to let CakePHP work with Master/Slave database setup.
 Overriding several CakePHP functions and add random slave initiation.
 
 ##Usage
@@ -10,16 +10,16 @@ If you have model specific callbacks use parent::beforeSave() before anything el
 		public funtion beforeSave($options=array())
 		{
 			// Always call AppModel beforeSave() !!
-			parent::beforeSave($options);
+			$ret = parent::beforeSave($options);
 			
 			// model specific tasks
 			
-			return true;
+			return $ret;
 		}
 	}
 	
 	
-All credits to Farsinsen https://github.com/peterfarsinsen
+All credits to Peter Farsinsen [on github](https://github.com/peterfarsinsen "Peter Farsinsen on GitHub")
 
 
 
