@@ -3,15 +3,8 @@
 * App model structure to make use of Master-Slave database setup
 *
 */
-class AppModel extends Model 
+class AppModel extends Model
 {
-    /**
-    * Holds the previous Database config name after switching
-    *
-    * @var string
-    */
-    public $prevDbConfig = null;
-
     /**
     * Make Model::beforeFind() write on master
     * @see http://bakery.cakephp.org/articles/gman.php/2009/01/20/master-slave-support-also-with-multiple-slave-support
@@ -54,18 +47,15 @@ class AppModel extends Model
     */
     public function query() {
         $params = func_get_args();
-
+        
+        $datasource = 'deault';
         if(!empty($params) && is_string($params[0])) {
             $updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE');
-            if(preg_match('/^(' . implode('|', $updates) . ')/i', trim($params[0]))) {
-                $this->_switchDbConfig('master');
-            }
+            $datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($params[0])) ? 'master' : 'default';
         }
+        $this->_switchDbConfig($datasource);
 
-        if(!empty($params)) {
-            $result =& call_user_func_array(array($this, 'parent::query'), $params);
-        }
-
+        $result =& call_user_func_array(array($this, 'parent::query'), $params);
         return $result;
     }
 
@@ -77,14 +67,11 @@ class AppModel extends Model
     */
     private function _switchDbConfig($config = null)
     {
-        if (empty($config)) {
-            $this->prevDbConfig = $this->useDbConfig;
+        if (!empty($config)) {
             $this->setDataSource($config);
+        } else {
+            $this->setDataSource('default');
         }
-        elseif (!empty($this->prevDbConfig)) {
-            $this->setDataSource($this->prevDbConfig);
-            $this->prevDbConfig = null;
-        }        
         return true;
     }
 }
