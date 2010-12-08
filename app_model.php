@@ -1,6 +1,6 @@
 <?php
 /**
-* App model structure to make us eof Master-Slave database setup
+* App model structure to make use of Master-Slave database setup
 *
 */
 class AppModel extends Model 
@@ -36,7 +36,7 @@ class AppModel extends Model
     */
     public function beforeDelete($cascade = true) {
         $this->_switchDbConfig('master');
-        return parent::beforeDelete($cascase);
+        return parent::beforeDelete($cascade);
     }
 
     /**
