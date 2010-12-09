@@ -1,26 +1,15 @@
-**Update:** Working on a datasource to handle this.
-
-Changing AppModel and database config to let CakePHP work with Master/Slave database setup.
-Overriding several CakePHP functions and add random slave initiation.
+Database config to let CakePHP work with Master/Slave database setup.
+There is a datasource for MySQL en MySQLi to use this setup in your code.
 
 ##Usage
-Add these methods to your APP/app_model.php or use this file as your app_model
-If you have model specific callbacks use parent::beforeSave() before anything else in that method.
+Setup your APP/config/database.php to work with the new DBO datasource.  
+Change the normal _mysql_ driver to the new master/slave driver:
 
-	class PostModel extends AppModel 
-	{
-		public funtion beforeSave($options=array())
-		{
-			// Always call AppModel beforeSave() !!
-			$ret = parent::beforeSave($options);
-			
-			// model specific tasks
-			
-			return $ret;
-		}
-	}
-	
-Also be carefull when using any function that supports array(callbacks => false)
+	mysql_master_slave
+
+or
+
+	mysqli_master_slave
 	
 All credits to Peter Farsinsen [on github](https://github.com/peterfarsinsen "Peter Farsinsen on GitHub")
 

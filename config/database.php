@@ -6,27 +6,27 @@ class DATABASE_CONFIG {
 
 	public function __construct() {
 		$master = array(
-			'driver' => 'mysqlislave',
+			'driver' => 'mysql_master_slave', // Or mysqli_master_slave
 			'persistent' => false,
 			'host' => 'master',
 			'port' => 3306,
 			'login' => 'root',
 			'password' => 'password',
 			'database' => 'database',
-		);
+			);
 
 		$slaves = array(
 			array(
-				'driver' => 'mysqlislave',
+				'driver' => 'mysql_master_slave', // Or mysqli_master_slave
 				'persistent' => false,
 				'host' => 'slave1',
 				'port' => 3306,
 				'login' => 'root',
 				'password' => 'password',
 				'database' => 'database',
-			),
+				),
 			array(
-				'driver' => 'mysqlislave',
+				'driver' => 'mysql_master_slave', // Or mysqli_master_slave
 				'persistent' => false,
 				'host' => 'slave2',
 				'port' => 3306,

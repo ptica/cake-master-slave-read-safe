@@ -1,9 +1,18 @@
 <?php
-App::import('Datasource', 'DboMysqli');
-class DboMysqlislave extends DboMysqli {
+App::import('Datasource', 'DboMysql');
+class DboMysqlMasterSlave extends DboMysqli {
+
+	public $description = "MySQL DBO Driver with support for Master/Slave database setup";
+
+	/**
+	 * Override execute to use master or slave connection
+	 *
+	 * @param string $sql 
+	 * @return resource
+	 */
 	public function _execute($sql) {
 		$updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE', 'TRUNCATE', 'REPLACE');
-        $datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($sql)) ? 'master' : 'default';
+		$datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($sql)) ? 'master' : 'default';
 
 		$this->setConnection($datasource);
 
@@ -39,4 +48,3 @@ class DboMysqlislave extends DboMysqli {
 		$this->connection = $datasource->connection;
 	}
 }
-?>
