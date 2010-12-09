@@ -6,7 +6,7 @@ class DATABASE_CONFIG {
 
 	public function __construct() {
 		$master = array(
-			'driver' => 'mysqli',
+			'driver' => 'mysqlislave',
 			'persistent' => false,
 			'host' => 'master',
 			'port' => 3306,
@@ -17,7 +17,7 @@ class DATABASE_CONFIG {
 
 		$slaves = array(
 			array(
-				'driver' => 'mysqli',
+				'driver' => 'mysqlislave',
 				'persistent' => false,
 				'host' => 'slave1',
 				'port' => 3306,
@@ -26,7 +26,7 @@ class DATABASE_CONFIG {
 				'database' => 'database',
 			),
 			array(
-				'driver' => 'mysqli',
+				'driver' => 'mysqlislave',
 				'persistent' => false,
 				'host' => 'slave2',
 				'port' => 3306,
