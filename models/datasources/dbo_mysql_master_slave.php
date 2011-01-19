@@ -11,7 +11,7 @@ class DboMysqlMasterSlave extends DboMysqli {
 	 * @return resource
 	 */
 	public function _execute($sql) {
-		$updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE', 'TRUNCATE', 'REPLACE');
+		$updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE', 'TRUNCATE', 'REPLACE', 'START TRANSACTION', 'COMMIT', 'ROLLBACK');
 		$datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($sql)) ? 'master' : 'default';
 
 		$this->setConnection($datasource);
