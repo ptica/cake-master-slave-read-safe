@@ -1,6 +1,6 @@
 <?php
 App::import('Datasource', 'DboMysql');
-class DboMysqlMasterSlave extends DboMysqli {
+class DboMysqlMasterSlave extends DboMysql {
 
 	public $description = "MySQL DBO Driver with support for Master/Slave database setup";
 
