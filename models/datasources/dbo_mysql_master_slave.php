@@ -12,9 +12,23 @@ class DboMysqlMasterSlave extends DboMysql {
 	 */
 	public function _execute($sql) {
 		$updates = array('CREATE', 'DELETE', 'DROP', 'INSERT', 'UPDATE', 'TRUNCATE', 'REPLACE', 'START TRANSACTION', 'COMMIT', 'ROLLBACK');
-		$datasource = preg_match('/^(' . implode('|', $updates) . ')/i', trim($sql)) ? 'master' : 'default';
-
-		$this->setConnection($datasource);
+		
+		$trimmed_sql = trim($sql);
+		
+		
+		if (preg_match('/^(SET NAMES)/i', $trimmed_sql)) {
+			// not needed to set a connection
+			// as 'set names' is invoked in the connection constructor
+			// whether 'encoding' is specified on the connection
+			// beware though: explicitly setting a connection here
+			// results in connection constructor being called again
+			// (and again and again ...)
+		} else {
+			$datasource = preg_match('/^(' . implode('|', $updates) . ')/i', $trimmed_sql) ? 'master' : 'default';
+			$this->setConnection($datasource);
+			debug($sql);
+			debug($datasource);
+		}
 
 		return parent::_execute($sql);
 	}
