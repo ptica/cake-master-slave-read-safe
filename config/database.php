@@ -40,7 +40,7 @@ class DATABASE_CONFIG {
 		);
 
 		$this->master = $master;
-		if(!isset($this->default)) {
+		if (!isset($this->default)) {
 			$this->default = $slaves[rand(0, count($slaves) - 1)];
 		}
 	}
