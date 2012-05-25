@@ -26,8 +26,6 @@ class DboMysqlMasterSlave extends DboMysql {
 		} else {
 			$datasource = preg_match('/^(' . implode('|', $updates) . ')/i', $trimmed_sql) ? 'master' : 'default';
 			$this->setConnection($datasource);
-			debug($sql);
-			debug($datasource);
 		}
 
 		return parent::_execute($sql);
