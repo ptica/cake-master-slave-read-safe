@@ -6,7 +6,7 @@ class DATABASE_CONFIG {
 
 	public function __construct() {
 		$master = array(
-			'driver' => 'master-slave.DboMysqlMasterSlave', // Or DboMysqliMasterSlave
+			'driver' => 'master-slave-read-safe.DboMysqlMasterSlaveReadSafe', // Or DboMysqliMasterSlaveReadSafe
 			'persistent' => false,
 			'host' => 'master',
 			'port' => 3306,
@@ -18,7 +18,7 @@ class DATABASE_CONFIG {
 
 		$slaves = array(
 			array(
-				'driver' => 'master-slave.DboMysqlMasterSlave', // Or DboMysqliMasterSlave
+				'driver' => 'master-slave-read-safe.DboMysqlMasterSlaveReadSafe', // Or DboMysqliMasterSlaveReadSafe
 				'persistent' => false,
 				'host' => 'slave1',
 				'port' => 3306,
@@ -28,7 +28,7 @@ class DATABASE_CONFIG {
 				'encoding' => 'utf8',
 				),
 			array(
-				'driver' => 'master-slave.DboMysqlMasterSlave', // Or DboMysqliMasterSlave
+				'driver' => 'master-slave-read-safe.DboMysqlMasterSlaveReadSafe', // Or DboMysqliMasterSlaveReadSafe
 				'persistent' => false,
 				'host' => 'slave2',
 				'port' => 3306,
